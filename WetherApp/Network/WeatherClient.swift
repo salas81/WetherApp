@@ -47,7 +47,8 @@ private extension WeatherClient {
         urlComponents.queryItems = [
             URLQueryItem(name: "lat", value: String(location.coordinate.latitude)),
             URLQueryItem(name: "lon", value: String(location.coordinate.latitude)),
-            URLQueryItem(name: "appid", value: "fadc3d8a7183214e18cd3caa79ae25c6")
+            URLQueryItem(name: "appid", value: "fadc3d8a7183214e18cd3caa79ae25c6"),
+            URLQueryItem(name: "units", value: "metric")
         ]
         return urlComponents.url
     }

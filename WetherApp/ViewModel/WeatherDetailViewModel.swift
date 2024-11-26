@@ -37,12 +37,12 @@ class WeatherDetailViewModel {
 }
 
 extension WeatherDetailViewModel {
-    var weatherDescriptiveText: String? {
-        weather?.weather.first?.description.capitalized
+    var weatherDescriptiveText: String {
+        weather?.weather.first?.description.lowercased() ?? "-"
     }
     
-    var temperature: String? {
-        weather?.main.temp.formatted()
+    var temperature: String {
+        weather?.main.temp.temperatureRepresentation() ?? "-"
     }
     
     var humidity: String? {
@@ -50,7 +50,9 @@ extension WeatherDetailViewModel {
     }
     
     var icon: Image? {
+        defer { isLoading = false }
         guard let weather = weather else { return nil }
+        isLoading = true
         Task {
             return try await Image(data: weatherService.fetchIcon(for: weather))
         }
@@ -65,4 +67,14 @@ extension Image {
         self = .init(uiImage: image)
     }
     
+}
+
+extension Double {
+    func temperatureRepresentation(unit: UnitTemperature = .celsius) -> String {
+        let temperature = Measurement(value: self.rounded(), unit: unit)
+        let formatter = MeasurementFormatter()
+//        formatter.numberFormatter.maximumFractionDigits = 1
+        formatter.unitOptions = .providedUnit
+        return formatter.string(from: temperature)
+    }
 }

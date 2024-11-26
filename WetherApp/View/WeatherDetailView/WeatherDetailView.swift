@@ -12,12 +12,22 @@ struct WeatherDetailView: View {
     let viewModel = WeatherDetailViewModel()
     
     var body: some View {
-        Text(viewModel.weatherDescriptiveText ?? "")
-            .onAppear {
-                Task {
-                    viewModel.fetchWeather(for: CLLocation(latitude: 51.5073219, longitude: -0.1276474))
-                }
+        VStack {
+            Image(systemName: "sun.min.fill")
+                .resizable()
+                .frame(width: 200, height: 200)
+                .foregroundStyle(Color.yellow)
+            Text(viewModel.temperature)
+                .font(.system(size: 80))
+                .bold()
+            Text(viewModel.weatherDescriptiveText)
+                .foregroundStyle(.gray)
+        }
+        .onAppear {
+            Task {
+                viewModel.fetchWeather(for: CLLocation(latitude: 51.5073219, longitude: -0.1276474))
             }
+        }
     }
 }
 
