@@ -10,13 +10,13 @@ import SwiftUI
 
 protocol CoordinatorProtocol: ObservableObject {
     associatedtype Content: View
-    associatedtype Scene: Hashable, Identifiable
+    associatedtype Page: Hashable
 //    associatedtype Sheet: Hashable, Identifiable
 //    associatedtype FullScreenCover: Hashable, Identifiable
 
-    var path: [Scene] { get set }
+    var path: [Page] { get set }
 //    var sheet: Sheet? { get set }
 //    var fullScreenCover: FullScreenCover? { get set }
-    @ViewBuilder func makeView(for scene: Scene) -> Content
-    func navigateTo(scene: Scene)
+    @ViewBuilder func makeView(for scene: Page) -> Content
+    func navigateTo(scene: Page)
 }
